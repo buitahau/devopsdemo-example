@@ -11,7 +11,7 @@ node {
     
     stage('Clone Repo') { // for display purposes
       // Get some code from a GitHub repository
-      git 'https://github.com/felipemeriga/DevOps-Example.git'
+      git 'https://github.com/buitahau/devopsdemo-example.git'
       // Get the Maven tool.
       // ** NOTE: This 'maven-3.5.2' Maven tool must be configured
       // **       in the global configuration.           
@@ -24,6 +24,7 @@ node {
     }
 		
     stage('Build Docker Image') {
+
       // build docker image
       dockerImage = docker.build("devopsexample:${env.BUILD_NUMBER}")
     }
@@ -36,7 +37,7 @@ node {
 	  
 	  sh "docker stop devopsexample"
 	  
-	  sh "docker rm devopsexample"
+	  sh "docker rm -f devopsexample"
 	  
 	  sh "docker run --name devopsexample -d -p 2222:2222 devopsexample:${env.BUILD_NUMBER}"
 	  
